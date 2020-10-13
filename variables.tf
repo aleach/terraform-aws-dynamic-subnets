@@ -59,6 +59,12 @@ variable "private_network_acl_id" {
   default     = ""
 }
 
+variable "nat_instance_egress_ports" {
+  type = list(string)
+  default = [0]
+  description = "The egress ports for the NAT instance."
+}
+
 variable "nat_gateway_enabled" {
   type        = bool
   description = "Flag to enable/disable NAT Gateways to allow servers in the private subnets to access the Internet"

@@ -52,3 +52,8 @@ output "nat_ips" {
   description = "IP Addresses in use for NAT"
   value       = coalescelist(aws_eip.default.*.public_ip, aws_eip.nat_instance.*.public_ip, data.aws_eip.nat_ips.*.public_ip, list(""))
 }
+
+output "nat_instance_security_groups" {
+  description = "Nat instance security groups"
+  value = aws_security_group.nat_instance.*.id
+}

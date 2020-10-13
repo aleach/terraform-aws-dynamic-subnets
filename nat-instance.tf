@@ -11,6 +11,7 @@ locals {
   nat_instance_enabled      = var.nat_instance_enabled ? 1 : 0
   nat_instance_count        = var.nat_instance_enabled && ! local.use_existing_eips ? length(var.availability_zones) : 0
   nat_instance_eip_count    = local.use_existing_eips ? 0 : local.nat_instance_count
+  nat_instance_egress_ports = var.nat_instance_enabled ? var.nat_instance_egress_ports : [0]
   instance_eip_allocations  = local.use_existing_eips ? data.aws_eip.nat_ips.*.id : aws_eip.nat_instance.*.id
 }
 
@@ -23,11 +24,10 @@ resource "aws_security_group" "nat_instance" {
 }
 
 resource "aws_security_group_rule" "nat_instance_egress" {
-  count             = local.enabled ? local.nat_instance_enabled : 0
-  description       = "Allow all egress traffic"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
+  count             = local.enabled ? local.nat_instance_enabled * length(local.nat_instance_egress_ports) : 0
+  from_port         = local.nat_instance_egress_ports[count.index]
+  to_port           = local.nat_instance_egress_ports[count.index]
+  protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = join("", aws_security_group.nat_instance.*.id)
   type              = "egress"
