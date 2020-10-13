@@ -79,6 +79,8 @@ resource "aws_instance" "nat_instance" {
     }
   )
 
+  user_data = var.nat_instance_user_data
+
   # Required by NAT
   # https://docs.aws.amazon.com/vpc/latest/userguide/VPC_NAT_Instance.html#EIP_Disable_SrcDestCheck
   source_dest_check = false

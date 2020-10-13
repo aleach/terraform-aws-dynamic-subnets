@@ -77,6 +77,12 @@ variable "nat_instance_type" {
   default     = "t3.micro"
 }
 
+variable "nat_instance_user_data" {
+  type        = string
+  description = "The user data to attach to the NAT instance."
+  default     = ""
+}
+
 variable "nat_instance_single" {
   type = bool
   default = true
