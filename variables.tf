@@ -77,6 +77,12 @@ variable "nat_instance_enabled" {
   default     = false
 }
 
+variable "nat_instance_key_name" {
+  type = string
+  description = "ssh key name for the NAT instance"
+  default = ""
+}
+
 variable "nat_instance_profile" {
   type = string
   description = "The instance profile to launch the NAT instance with."

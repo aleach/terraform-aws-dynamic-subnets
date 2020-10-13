@@ -89,6 +89,8 @@ resource "aws_instance" "nat_instance" {
 
   associate_public_ip_address = true
 
+  key_name = var.nat_instance_key_name
+
   lifecycle {
     create_before_destroy = true
   }
