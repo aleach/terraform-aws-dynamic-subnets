@@ -57,3 +57,8 @@ output "nat_instance_security_groups" {
   description = "Nat instance security groups"
   value = aws_security_group.nat_instance.*.id
 }
+
+output "nat_instance_name" {
+  description = "Nat instance security groups"
+  value = aws_security_group.nat_instance.*.name
+}

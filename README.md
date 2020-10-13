@@ -216,6 +216,7 @@ Available targets:
 | nat\_gateway\_enabled | Flag to enable/disable NAT Gateways to allow servers in the private subnets to access the Internet | `bool` | `true` | no |
 | nat\_instance\_enabled | Flag to enable/disable NAT Instances to allow servers in the private subnets to access the Internet | `bool` | `false` | no |
 | nat\_instance\_type | NAT Instance type | `string` | `"t3.micro"` | no |
+| nat\_instance\_user\_data | NAT Instance user data | `string` | `null` | no |
 | private\_network\_acl\_id | Network ACL ID that will be added to private subnets. If empty, a new ACL will be created | `string` | `""` | no |
 | private\_subnets\_additional\_tags | Additional tags to be added to private subnets | `map(string)` | `{}` | no |
 | public\_network\_acl\_id | Network ACL ID that will be added to public subnets. If empty, a new ACL will be created | `string` | `""` | no |
