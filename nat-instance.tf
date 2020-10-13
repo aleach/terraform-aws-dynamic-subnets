@@ -66,7 +66,7 @@ data "aws_ami" "nat_instance" {
 // https://docs.aws.amazon.com/vpc/latest/userguide/VPC_NAT_Instance.html
 // https://dzone.com/articles/nat-instance-vs-nat-gateway
 resource "aws_instance" "nat_instance" {
-  count                  = local.enabled ? local.nat_instance_count : 0
+  count                  = var.nat_instance_single ? 1 : local.enabled ? local.nat_instance_count : 0
   ami                    = join("", data.aws_ami.nat_instance.*.id)
   instance_type          = var.nat_instance_type
   subnet_id              = element(aws_subnet.public.*.id, count.index)
