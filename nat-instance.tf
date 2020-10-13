@@ -79,6 +79,8 @@ resource "aws_instance" "nat_instance" {
     }
   )
 
+  iam_instance_profile = var.nat_instance_profile
+
   user_data = var.nat_instance_user_data
 
   # Required by NAT

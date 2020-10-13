@@ -77,6 +77,12 @@ variable "nat_instance_enabled" {
   default     = false
 }
 
+variabe "nat_instance_profile" {
+  type = string
+  description = "The instance profile to launch the NAT instance with."
+  default = ""
+}
+
 variable "nat_instance_type" {
   type        = string
   description = "NAT Instance type"
