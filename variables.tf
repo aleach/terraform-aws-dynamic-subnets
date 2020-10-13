@@ -77,6 +77,12 @@ variable "nat_instance_type" {
   default     = "t3.micro"
 }
 
+variable "nat_instance_single" {
+  type = bool
+  default = true
+  description = "Restrict to use a single NAT instance."
+}
+
 variable "existing_nat_ips" {
   type        = list(string)
   default     = []

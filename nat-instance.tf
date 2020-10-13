@@ -7,11 +7,11 @@ module "nat_instance_label" {
 }
 
 locals {
-  cidr_block               = var.cidr_block != "" ? var.cidr_block : join("", data.aws_vpc.default.*.cidr_block)
-  nat_instance_enabled     = var.nat_instance_enabled ? 1 : 0
-  nat_instance_count       = var.nat_instance_enabled && ! local.use_existing_eips ? length(var.availability_zones) : 0
-  nat_instance_eip_count   = local.use_existing_eips ? 0 : local.nat_instance_count
-  instance_eip_allocations = local.use_existing_eips ? data.aws_eip.nat_ips.*.id : aws_eip.nat_instance.*.id
+  cidr_block                = var.cidr_block != "" ? var.cidr_block : join("", data.aws_vpc.default.*.cidr_block)
+  nat_instance_enabled      = var.nat_instance_enabled ? 1 : 0
+  nat_instance_count        = var.nat_instance_enabled && ! local.use_existing_eips ? length(var.availability_zones) : 0
+  nat_instance_eip_count    = local.use_existing_eips ? 0 : local.nat_instance_count
+  instance_eip_allocations  = local.use_existing_eips ? data.aws_eip.nat_ips.*.id : aws_eip.nat_instance.*.id
 }
 
 resource "aws_security_group" "nat_instance" {
@@ -106,13 +106,13 @@ resource "aws_eip" "nat_instance" {
 }
 
 resource "aws_eip_association" "nat_instance" {
-  count         = local.enabled ? local.nat_instance_count : 0
+  count         = var.nat_instance_single ? 1 : local.enabled ? local.nat_instance_count : 0
   instance_id   = element(aws_instance.nat_instance.*.id, count.index)
   allocation_id = element(local.instance_eip_allocations, count.index)
 }
 
 resource "aws_route" "nat_instance" {
-  count                  = local.enabled ? local.nat_instance_count : 0
+  count                  = var.nat_instance_single ? 1 : local.enabled ? local.nat_instance_count : 0
   route_table_id         = element(aws_route_table.private.*.id, count.index)
   instance_id            = element(aws_instance.nat_instance.*.id, count.index)
   destination_cidr_block = "0.0.0.0/0"
