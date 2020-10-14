@@ -60,5 +60,5 @@ output "nat_instance_security_groups" {
 
 output "nat_instance_name" {
   description = "Nat instance security groups"
-  value = aws_security_group.nat_instance.*.name
+  value = aws_instance.nat_instance.*.tags["Name"]
 }
