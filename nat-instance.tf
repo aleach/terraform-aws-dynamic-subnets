@@ -118,9 +118,9 @@ resource "aws_eip_association" "nat_instance" {
 }
 
 resource "aws_route" "nat_instance" {
-  count                  = var.nat_instance_single ? 1 : local.enabled ? local.nat_instance_count : 0
+  count                  = local.enabled ? length(aws_route_table.private) : 0
   route_table_id         = element(aws_route_table.private.*.id, count.index)
-  instance_id            = element(aws_instance.nat_instance.*.id, count.index)
+  instance_id            = var.nat_instance_single ? aws_instance.nat_instance[0].id : element(aws_instance.nat_instance.*.id, count.index)
   destination_cidr_block = "0.0.0.0/0"
   depends_on             = [aws_route_table.private]
 
