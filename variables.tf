@@ -101,16 +101,10 @@ variable "nat_instance_user_data" {
   default     = ""
 }
 
-variable "nat_instance_single" {
-  type = bool
-  default = true
-  description = "Restrict to use a single NAT instance."
-}
-
-variable "existing_nat_ips" {
+variable "nat_elastic_ips" {
   type        = list(string)
   default     = []
-  description = "Existing Elastic IPs to attach to the NAT Gateway or Instance instead of creating a new one."
+  description = "Existing Elastic IPs to attach to the NAT Gateway(s) or Instance(s) instead of creating new ones."
 }
 
 variable "map_public_ip_on_launch" {
@@ -143,3 +137,26 @@ variable "public_subnets_additional_tags" {
   description = "Additional tags to be added to public subnets"
 }
 
+variable "metadata_http_endpoint_enabled" {
+  type        = bool
+  default     = true
+  description = "Whether the metadata service is available"
+}
+
+variable "metadata_http_put_response_hop_limit" {
+  type        = number
+  default     = 1
+  description = "The desired HTTP PUT response hop limit (between 1 and 64) for instance metadata requests."
+}
+
+variable "metadata_http_tokens_required" {
+  type        = bool
+  default     = true
+  description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2."
+}
+
+variable "root_block_device_encrypted" {
+  type        = bool
+  default     = true
+  description = "Whether to encrypt the root block device"
+}

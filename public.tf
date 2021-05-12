@@ -1,10 +1,11 @@
 module "public_label" {
-  source = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  source  = "cloudposse/label/null"
+  version = "0.24.1"
 
   attributes = ["public"]
   tags = merge(
     var.public_subnets_additional_tags,
-    map(var.subnet_type_tag_key, format(var.subnet_type_tag_value_format, "public"))
+    { (var.subnet_type_tag_key) = format(var.subnet_type_tag_value_format, "public") }
   )
 
   context = module.this.context
